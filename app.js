@@ -46,7 +46,7 @@ app.set('trust proxy', 1)
 // )
 
 const corsOptions = {
-  origin: 'http://localhost:8888',
+  origin: '*',
   // origin: 'http://localhost:5173',
   // origin: 'https://comfyslothupgrad.netlify.app',
   optionsSuccessStatus: 200,
