@@ -108,7 +108,6 @@ const uploadfile = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ image: `http://localhost:3000/api/v1/products/fetch/${fileName}` })
 }
-
 // Route to fetch uploaded file
 const getImage = (req, res) => {
   const { fileName } = req.params
@@ -123,6 +122,7 @@ const getImage = (req, res) => {
     res.status(404).send('File not found.')
   }
 }
+
 
 module.exports = {
   createProduct,
