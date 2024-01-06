@@ -116,13 +116,17 @@ const getImage = (req, res) => {
   if (fs.existsSync(filePath)) {
     // If the file exists, send it back in the response
     // res.setHeader('Cross-Origin-Resource-Policy', 'same-site')
-    
+    res.header('Cross-Origin-Resource-Policy', 'same-origin')
+    res.header(
+      'Access-Control-Allow-Origin',
+      'https://comfyslothupgrad.netlify.app'
+    )
+
     res.sendFile(filePath)
   } else {
     res.status(404).send('File not found.')
   }
 }
-
 
 module.exports = {
   createProduct,
