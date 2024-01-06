@@ -48,7 +48,7 @@ app.use(
 const corsOptions = {
   // origin: 'http://localhost:8888',
   // origin: 'http://localhost:5173',
-  origin: 'https://fabulous-hamster-0bc3b7.netlify.app/',
+  origin: 'https://fabulous-hamster-0bc3b7.netlify.app',
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
