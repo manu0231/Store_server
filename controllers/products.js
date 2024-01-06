@@ -115,9 +115,8 @@ const getImage = (req, res) => {
   console.log(filePath)
   if (fs.existsSync(filePath)) {
     // If the file exists, send it back in the response
-    res.setHeader('Cross-Origin-Resource-Policy', 'same-site')
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
-    res.setHeader('ross-Origin-Embedder-Policy', 'require-corp')
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp')
 
     res.sendFile(filePath)
   } else {
