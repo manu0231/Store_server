@@ -32,8 +32,8 @@ const register = async (req, res) => {
     role,
     verificationToken,
   })
-  const origin = 'http://localhost:8888'
-  // const newOrigin = 'https://react-node-user-workflow-front-end.netlify.app';
+  // const origin = 'http://localhost:8888'
+  const origin = 'https://comfyslothupgrad.netlify.app';
 
   // const tempOrigin = req.get('origin');
   // const protocol = req.protocol
@@ -54,25 +54,28 @@ const register = async (req, res) => {
 }
 
 const verifyEmail = async (req, res) => {
-  const { verificationToken, email } = req.body
+  const { verificationToken, email } = req.body;
 
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email });
 
-  if (!user) {
-    throw new CustomError.UnauthenticatedError('Verification Failed')
+   if (!user) {
+    throw new CustomError.UnauthenticatedError('Verification Failed');
   }
 
   if (user.verificationToken !== verificationToken) {
-    throw new CustomError.UnauthenticatedError('Verification Failed')
+    throw new CustomError.UnauthenticatedError('Verification Failed');
   }
+  
+  user.isVerified = true;
+  user.verified = Date.now();
+  user.verificationToken = '';
 
-  ;(user.isVerified = true), (user.verified = Date.now())
-  user.verificationToken = ''
+  await user.save();
 
-  await user.save()
+  // Respond with a success message
+  res.status(StatusCodes.OK).json({ msg: 'Email Verified' });
+};
 
-  res.status(StatusCodes.OK).json({ msg: 'Email Verified' })
-}
 
 const login = async (req, res) => {
   const { email, password } = req.body
