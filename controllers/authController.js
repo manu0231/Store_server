@@ -36,10 +36,10 @@ const register = async (req, res) => {
   const origin = 'https://comfyslothupgrad.netlify.app';
 
   // const tempOrigin = req.get('origin');
-  // const protocol = req.protocol
-  // const host = req.get('host');
-  // const forwardedHost = req.get('x-forwarded-host')
-  // const forwardedProtocol = req.get('x-forwarded-proto')
+  const protocol = req.protocol
+  const host = req.get('host');
+  const forwardedHost = req.get('x-forwarded-host')
+  const forwardedProtocol = req.get('x-forwarded-proto')
 
   await sendVerificationEmail({
     name: user.name,
