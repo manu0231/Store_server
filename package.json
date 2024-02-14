@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+   // "start": "nodemon app.js",
+    "start":"cross-env smtp_password='fgqd ocpp ctwa wrlj' node your_app.js"
   },
   "keywords": [],
   "author": "",
