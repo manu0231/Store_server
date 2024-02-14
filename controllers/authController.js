@@ -33,7 +33,7 @@ const register = async (req, res) => {
     verificationToken,
   })
   // const origin = 'http://localhost:8888'
-  const origin = 'https://comfyslothupgrad.netlify.app'||'http://localhost:8888';
+  const origin = 'https://comfyslothupgrad.netlify.app';
 
   // const tempOrigin = req.get('origin');
   // const protocol = req.protocol
