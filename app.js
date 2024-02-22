@@ -47,7 +47,8 @@ app.use(
 )
 
 const corsOptions = {
-  origin: process.env.PROD,
+  origin: `https://comfyslothupgrad.netlify.app`,
+  // origin: `http://localhost:5173`,
   optionsSuccessStatus: 200,
   credentials: true,
 }
