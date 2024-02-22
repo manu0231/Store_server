@@ -3,6 +3,6 @@ module.exports = {
   port: 587,
   auth: {
     user: '3alphaat@gmail.com',
-    pass: 'fgqd ocpp ctwa wrlj',
+    pass: process.env.SMTP_PASSWORD,
   },
 }
