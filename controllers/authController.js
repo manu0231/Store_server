@@ -32,21 +32,22 @@ const register = async (req, res) => {
     role,
     verificationToken,
   })
-  // const origin = 'http://localhost:8888'
-  const origin = 'https://comfyslothupgrad.netlify.app';
 
-  // const tempOrigin = req.get('origin');
-  // const protocol = req.protocol
-  // const host = req.get('host');
-  // const forwardedHost = req.get('x-forwarded-host')
-  // const forwardedProtocol = req.get('x-forwarded-proto')
+  // console.log(user)
+  const origin = req.get('origin')
 
-  await sendVerificationEmail({
-    name: user.name,
-    email: user.email,
-    verificationToken: user.verificationToken,
-    origin,
-  })
+  // console.log('Origin of the request:', origin)
+
+  try {
+    await sendVerificationEmail({
+      name: user.name,
+      email: user.email,
+      verificationToken: user.verificationToken,
+      origin,
+    })
+  } catch (error) {
+    console.log(error)
+  }
   // send verification token back only while testing in postman!!!
   res.status(StatusCodes.CREATED).json({
     msg: 'Success! Please check your email to verify account',
@@ -54,28 +55,27 @@ const register = async (req, res) => {
 }
 
 const verifyEmail = async (req, res) => {
-  const { verificationToken, email } = req.body;
+  const { verificationToken, email } = req.body
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email })
 
-   if (!user) {
-    throw new CustomError.UnauthenticatedError('Verification Failed');
+  if (!user) {
+    throw new CustomError.UnauthenticatedError('Verification Failed')
   }
 
   if (user.verificationToken !== verificationToken) {
-    throw new CustomError.UnauthenticatedError('Verification Failed');
+    throw new CustomError.UnauthenticatedError('Verification Failed')
   }
-  
-  user.isVerified = true;
-  user.verified = Date.now();
-  user.verificationToken = '';
 
-  await user.save();
+  user.isVerified = true
+  user.verified = Date.now()
+  user.verificationToken = ''
+
+  await user.save()
 
   // Respond with a success message
-  res.status(StatusCodes.OK).json({ msg: 'Email Verified' });
-};
-
+  res.status(StatusCodes.OK).json({ msg: 'Email Verified' })
+}
 
 const login = async (req, res) => {
   const { email, password } = req.body
@@ -151,7 +151,8 @@ const forgotPassword = async (req, res) => {
   if (user) {
     const passwordToken = crypto.randomBytes(70).toString('hex')
     // send email
-    const origin = 'http://localhost:8888'
+    const origin = req.get('origin')
+
     await sendResetPasswordEmail({
       name: user.name,
       email: user.email,
@@ -171,6 +172,7 @@ const forgotPassword = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ msg: 'Please check your email for reset password link' })
 }
+
 const resetPassword = async (req, res) => {
   const { token, email, password } = req.body
   if (!token || !email || !password) {

@@ -18,9 +18,10 @@ const mongoSanitize = require('express-mongo-sanitize')
 
 //database
 const connectDB = require('./db/connect')
-// Enable CORS for all routes
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*') // You can replace '*' with specific origins if needed
+  res.header('Access-Control-Allow-Credentials', true)
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   next()
@@ -40,17 +41,15 @@ const notfound = require('./middleware/notfoundMiddleware')
 app.set('trust proxy', 1)
 app.use(
   rateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 60,
+    windowMs: 15 * 150 * 1000,
+    max: 150,
   })
 )
 
 const corsOptions = {
-  // origin: 'http://localhost:8888',
-  // origin: 'http://localhost:5173',
-  origin: 'https://comfyslothupgrad.netlify.app',
+  origin: process.env.PROD,
   optionsSuccessStatus: 200,
-  exposedHeaders: 'Content-Length',
+  credentials: true,
 }
 
 app.use(mongoSanitize())
